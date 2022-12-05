@@ -93,7 +93,11 @@ psa_status_t mbedtls_psa_ecp_load_representation(
          */
         if( ( data_length & 1 ) == 0 )
             return( PSA_ERROR_INVALID_ARGUMENT );
-        curve_bytes = data_length / 2;
+
+        if (data[0] == 0x04)
+            curve_bytes = data_length / 2;
+        else if (data[0] == 0x02 || data[0] == 0x03)
+            curve_bytes = data_length - 1;
 
         /* Montgomery public keys are represented in compressed format, meaning
          * their curve_bytes is equal to the amount of input. */
