@@ -270,6 +270,12 @@ def baremetal_adapter(name, active, section):
     if name == 'MBEDTLS_NO_PLATFORM_ENTROPY':
         # No OS-provided entropy source
         return True
+    if name == 'MBEDTLS_ENTROPY_HARDWARE_ALT':
+        # Custom entropy source provided
+        return True
+    if name == 'MBEDTLS_ENTROPY_FORCE_SHA256':
+        # Force SHA-256 accumulator
+        return True
     return include_in_full(name) and keep_in_baremetal(name)
 
 def include_in_crypto(name):
