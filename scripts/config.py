@@ -241,6 +241,7 @@ def full_adapter(name, active, section):
 # need to be repeated here.
 EXCLUDE_FROM_BAREMETAL = frozenset([
     #pylint: disable=line-too-long
+    'MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS',
     'MBEDTLS_ENTROPY_NV_SEED', # requires a filesystem and FS_IO or alternate NV seed hooks
     'MBEDTLS_FS_IO', # requires a filesystem
     'MBEDTLS_HAVE_TIME', # requires a clock
@@ -275,6 +276,14 @@ def baremetal_adapter(name, active, section):
         return True
     if name == 'MBEDTLS_ENTROPY_FORCE_SHA256':
         # Force SHA-256 accumulator
+        return True
+    if name == 'MBEDTLS_MEMORY_BUFFER_ALLOC_C':
+        return True
+    if name == 'MBEDTLS_PLATFORM_C':
+        return True
+    if name == 'MBEDTLS_PLATFORM_MEMORY':
+        return True
+    if name == 'MBEDTLS_PLATFORM_NO_STD_FUNCTIONS':
         return True
     return include_in_full(name) and keep_in_baremetal(name)
 
